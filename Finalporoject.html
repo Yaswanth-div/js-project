@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Facts</title>
+    <style>
+        body {
+    background-image: url(https://c4.wallpaperflare.com/wallpaper/370/963/678/background-black-plain-wallpaper-preview.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#number-facts {
+    padding: 20px;
+    color: rgb(255, 255, 255);
+    background-color: #1a181852;
+    border: solid 1px;
+    border-radius: 10px;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px; 
+}
+
+button {
+    background-color: #4e8f44;
+    height: 40px;
+    width: 20%;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#fact {
+    font-size: 20px;
+    color: #000000;
+    text-align: center;
+    background-color: white;
+    width: 50%;
+   
+}
+
+        #ninput {
+            height: 40px;
+            width: 60%;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 16px;
+            border: 2px solid #4e8f44;
+        }
+
+        @media only screen and (min-width: 320px) and (max-width: 640px) {
+            body {
+                height: auto;
+            }
+
+            #number-facts {
+                width: 90%;
+                top: 20px;
+                left: 50%;
+               
+            }
+
+            #fact {
+                width: 90%;
+                top: 20px;
+                left: 50%;
+               
+            }
+        }
+
+        @media only screen and (min-width: 601px) and (max-width: 1024px) {
+            #number-facts {
+                width: 70%;
+            }
+
+            #fact {
+                width: 70%;
+            }
+        }
+
+        @media only screen and (min-width: 1025px) {
+            #number-facts {
+                width: 50%;
+            }
+
+            #fact {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="number-facts">
+        <h2>Number Facts</h2>
+        <input type="number" id="ninput" placeholder="Enter a number">
+        <button onclick="getFact()">Get Fact</button>
+    </div>
+    <p id="fact"></p>
+    <script>
+        function getFact() {
+            const number = document.getElementById('ninput').value;
+            if (!number || isNaN(number)) {
+                alert('Please enter a valid number.');
+                return;
+            }
+
+            fetch(`https://numbersapi.p.rapidapi.com/${number}/trivia?json=true`, {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': 'd91c2839a8msh764323971960d91p131619jsnbcf9546ffe3c',
+                    'X-RapidAPI-Host': 'numbersapi.p.rapidapi.com'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('fact').innerText = data.text;
+                document.getElementById('fact').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        }
+    </script>
+</body>
+</html>
